@@ -57,18 +57,14 @@ public class MainActivityPresenter implements MainActivityContract.Presenter {
 
 
     @Override
-    public void init(Activity activity) {
+    public void init(Activity activity,Context context) {
         this.activity = activity;
-    }
-
-    @Override
-    public void getContext(Context context) {
         this.context = context;
     }
 
     @Override
     public void getLocation() {
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(activity);
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context);
         fusedLocationProviderClient.getLastLocation()
                 .addOnSuccessListener(activity, new OnSuccessListener<Location>() {
                     @Override

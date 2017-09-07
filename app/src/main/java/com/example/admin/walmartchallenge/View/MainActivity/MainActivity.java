@@ -21,7 +21,6 @@ import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.admin.walmartchallenge.Injection.mainActivity.DaggerMainActivityComponent;
 import com.example.admin.walmartchallenge.Model.CurrentObservation;
@@ -63,12 +62,9 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
         tvCondition = (TextView) findViewById(R.id.tvCondition);
         setupDagger();
         presenter.attachView(this);
-        presenter.getContext(this);
-        presenter.init(this);
+        presenter.init(this,this);
         checkPermissions();
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
-
     }
 
     private void setupDagger() {
@@ -122,7 +118,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
             case R.id.settings:
                 Intent intent = new Intent(this, SettingsActivity.class);
                 startActivityForResult(intent, 1);
-                Toast.makeText(this, "Waiting for settings", Toast.LENGTH_LONG).show();
+                //Toast.makeText(this, "Waiting for settings", Toast.LENGTH_LONG).show();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -196,5 +192,11 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
                 }
             }
         }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        presenter.detachView();
     }
 }

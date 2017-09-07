@@ -17,8 +17,7 @@ public interface MainActivityContract {
         void nextWeather(List<HourlyForecastOrdered> hourlyForecastOrdered);
     }
     interface Presenter extends BasePresenter<View> {
-        void init(Activity activity);
-        void getContext(Context context);
+        void init(Activity activity,Context context);
         void getLocation();
         void restCall(String zipCode,Boolean flag);
     }
