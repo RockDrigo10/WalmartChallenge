@@ -5,7 +5,7 @@ android:
   components:
     - tools
     - android-26
-    - build-tools-26
+    - build-tools-26.0.1
     - extra-google-m2repository
     - extra-android-m2repository
 
@@ -17,7 +17,8 @@ android:
 
 
 before_install:
-  - echo yes | android update sdk --all --filter build-tools-26 --no-ui --force
+  -echo yes | android update sdk --all --filter build-tools-26 --no-ui --force",
+    chmod +x gradlew,
 
 script:
     - echo "Travis branch is $TRAVIS_BRANCH"

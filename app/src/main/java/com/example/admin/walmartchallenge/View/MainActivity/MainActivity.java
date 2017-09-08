@@ -2,7 +2,9 @@ package com.example.admin.walmartchallenge.View.MainActivity;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -35,6 +37,7 @@ import javax.inject.Inject;
 public class MainActivity extends AppCompatActivity implements MainActivityContract.View {
 
     private static final int MY_PERMISSIONS_REQUEST_LOCATION = 10;
+    private static final String MY_PREF_FILE = "mypref_file";
     @Inject
     MainActivityPresenter presenter;
     RecyclerView.LayoutManager layoutManager;
@@ -118,7 +121,11 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
             case R.id.settings:
                 Intent intent = new Intent(this, SettingsActivity.class);
                 startActivityForResult(intent, 1);
-                //Toast.makeText(this, "Waiting for settings", Toast.LENGTH_LONG).show();
+                SharedPreferences sharedPreferences = getSharedPreferences(MY_PREF_FILE, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("zip",zip);
+                editor.putString("unit",unit);
+                editor.commit();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -195,8 +202,8 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
+    protected void onDestroy() {
+        super.onDestroy();
         presenter.detachView();
     }
 }

@@ -1,7 +1,9 @@
 package com.example.admin.walmartchallenge.View.SettingsActivity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -17,7 +19,7 @@ import com.example.admin.walmartchallenge.R;
 import javax.inject.Inject;
 
 public class SettingsActivity extends AppCompatActivity implements SettingsActivityContract.View {
-    private static final String PREFS_NAME = "myPref";
+    private static final String MY_PREF_FILE = "mypref_file";
     Toolbar toolbar2;
     EditText etZipCode;
     Spinner spinner;
@@ -40,6 +42,9 @@ public class SettingsActivity extends AppCompatActivity implements SettingsActiv
         presenter.attachView(this);
         setToolbarBackPressed();
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        SharedPreferences sharePreferences = getSharedPreferences(MY_PREF_FILE, Context.MODE_PRIVATE);
+        etZipCode.setText(sharePreferences.getString("zip","0"));
+        spinner.setSelection(adapter.getPosition(sharePreferences.getString("unit","Fahrenheit")));
 
     }
 
